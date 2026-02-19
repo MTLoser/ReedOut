@@ -1,0 +1,51 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Go
+        uses: actions/setup-go@v5
+        with:
+          go-version: '1.23'
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: Build backend
+        run: |
+          CGO_ENABLED=1 GOOS=linux GOARCH=amd64 go build -o reedout-linux-amd64 ./cmd/reedout
+
+      - name: Build frontend
+        run: |
+          cd web
+          npm ci
+          npx vite build
+
+      - name: Package release
+        run: |
+          mkdir -p release/web
+          cp reedout-linux-amd64 release/reedout
+          cp -r web/dist release/web/dist
+          cp -r templates release/templates
+          chmod +x release/reedout
+          cd release
+          tar czf ../reedout-linux-amd64.tar.gz .
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: reedout-linux-amd64.tar.gz
+          generate_release_notes: true

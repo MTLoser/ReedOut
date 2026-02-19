@@ -29,17 +29,24 @@ export function CreateServer() {
     }
   };
 
+  const [submitting, setSubmitting] = useState(false);
+
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
-    if (!selected) return;
-    await createServer.mutateAsync({
-      name,
-      template_id: selected.id,
-      env,
-      memory: selected.memory,
-      cpu: selected.cpu,
-    });
-    navigate("/");
+    if (!selected || submitting) return;
+    setSubmitting(true);
+    try {
+      await createServer.mutateAsync({
+        name,
+        template_id: selected.id,
+        env,
+        memory: selected.memory,
+        cpu: selected.cpu,
+      });
+      navigate("/");
+    } finally {
+      setSubmitting(false);
+    }
   };
 
   if (isLoading) {
@@ -130,8 +137,8 @@ export function CreateServer() {
               )}
 
               <div className="flex gap-3 pt-2">
-                <Button type="submit" disabled={createServer.isPending}>
-                  {createServer.isPending ? "Creating..." : "Create Server"}
+                <Button type="submit" disabled={submitting}>
+                  {submitting ? "Creating..." : "Create Server"}
                 </Button>
                 <Button type="button" variant="outline" onClick={() => setSelected(null)}>
                   Change Template
