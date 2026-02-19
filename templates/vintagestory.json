@@ -1,0 +1,35 @@
+{
+  "id": "vintagestory",
+  "name": "Vintage Story",
+  "game": "vintagestory",
+  "description": "Vintage Story dedicated server",
+  "image": "devidian/vintagestory:latest",
+  "ports": ["42420:42420/tcp"],
+  "env": {
+    "VS_DATA_PATH": "/data/vs",
+    "SERVER_NAME": "ReedOut Vintage Story"
+  },
+  "volumes": {
+    "{data_dir}": "/data/vs"
+  },
+  "memory": "4G",
+  "cpu": 2.0,
+  "config_fields": [
+    {
+      "key": "server_name",
+      "label": "Server Name",
+      "type": "text",
+      "default": "ReedOut Vintage Story",
+      "description": "Public server name",
+      "env_var": "SERVER_NAME"
+    },
+    {
+      "key": "max_players",
+      "label": "Max Players",
+      "type": "number",
+      "default": "16",
+      "description": "Maximum number of players",
+      "env_var": "MAX_PLAYERS"
+    }
+  ]
+}

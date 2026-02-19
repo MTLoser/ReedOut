@@ -1,0 +1,20 @@
+# Build output
+bin/
+reedout
+web/dist/
+
+# Dependencies
+web/node_modules/
+
+# Data
+data/
+*.db
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDE
+.idea/
+.vscode/
+*.swp

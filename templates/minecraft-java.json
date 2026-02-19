@@ -1,0 +1,84 @@
+{
+  "id": "minecraft-java",
+  "name": "Minecraft Java Edition",
+  "game": "minecraft",
+  "description": "Vanilla Minecraft Java Edition server using itzg/minecraft-server",
+  "image": "itzg/minecraft-server:latest",
+  "ports": ["25565:25565/tcp"],
+  "env": {
+    "EULA": "TRUE",
+    "TYPE": "VANILLA",
+    "VERSION": "LATEST",
+    "MEMORY": "2G",
+    "ENABLE_RCON": "true",
+    "RCON_PASSWORD": "reedout",
+    "RCON_PORT": "25575"
+  },
+  "volumes": {
+    "{data_dir}": "/data"
+  },
+  "memory": "2G",
+  "cpu": 2.0,
+  "config_fields": [
+    {
+      "key": "version",
+      "label": "Minecraft Version",
+      "type": "text",
+      "default": "LATEST",
+      "description": "Server version (e.g., 1.21.4, LATEST)",
+      "env_var": "VERSION"
+    },
+    {
+      "key": "type",
+      "label": "Server Type",
+      "type": "select",
+      "default": "VANILLA",
+      "description": "Server software to use",
+      "options": ["VANILLA", "PAPER", "FABRIC", "FORGE", "SPIGOT"],
+      "env_var": "TYPE"
+    },
+    {
+      "key": "memory",
+      "label": "Memory",
+      "type": "select",
+      "default": "2G",
+      "description": "JVM heap memory allocation",
+      "options": ["1G", "2G", "4G", "6G", "8G"],
+      "env_var": "MEMORY"
+    },
+    {
+      "key": "max_players",
+      "label": "Max Players",
+      "type": "number",
+      "default": "20",
+      "description": "Maximum number of players",
+      "env_var": "MAX_PLAYERS"
+    },
+    {
+      "key": "difficulty",
+      "label": "Difficulty",
+      "type": "select",
+      "default": "normal",
+      "description": "Game difficulty",
+      "options": ["peaceful", "easy", "normal", "hard"],
+      "env_var": "DIFFICULTY"
+    },
+    {
+      "key": "gamemode",
+      "label": "Game Mode",
+      "type": "select",
+      "default": "survival",
+      "description": "Default game mode",
+      "options": ["survival", "creative", "adventure", "spectator"],
+      "env_var": "MODE"
+    },
+    {
+      "key": "motd",
+      "label": "Server MOTD",
+      "type": "text",
+      "default": "A ReedOut Minecraft Server",
+      "description": "Message of the day shown in server browser",
+      "env_var": "MOTD"
+    }
+  ]
+}
